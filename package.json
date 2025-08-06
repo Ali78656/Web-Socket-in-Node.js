@@ -1,0 +1,16 @@
+{
+  "name": "web-socket",
+  "version": "1.0.0",
+  "description": "A web socket application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1"
+  }
+}
