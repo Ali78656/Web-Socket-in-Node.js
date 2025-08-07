@@ -4,17 +4,115 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat App</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #e0e0e0;
+        flex-direction: column; /* Added to arrange h1 and chat-container vertically */
+      }
+
+      h1 {
+        background-color: #075e54;
+        color: white;
+        padding: 15px;
+        margin: 0 auto 20px auto; /* Added bottom margin */
+        text-align: center;
+        font-size: 20px;
+        width: fit-content;
+        border-radius: 8px; /* Added border-radius */
+      }
+
+      .chat-container {
+        width: 100%;
+        max-width: 400px;
+        height: 80vh;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .messages {
+        flex-grow: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #ece5dd;
+      }
+
+      .messages p {
+        margin: 5px 0;
+        padding: 10px 12px;
+        border-radius: 8px;
+        max-width: 80%;
+        word-wrap: break-word;
+        background-color: #dcf8c6; /* Sent message color */
+        align-self: flex-end; /* Align to right for sent messages */
+        margin-left: auto; /* Push to right */
+        display: flex; /* For aligning text and icon */
+        align-items: flex-end; /* Align icon to bottom of message */
+        justify-content: space-between; /* Space out text and icon */
+      }
+
+      .message-status {
+        font-size: 10px;
+        margin-left: 8px;
+        color: #6d6d6d; /* Grey for sent */
+      }
+
+      .message-input-container {
+        display: flex;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-top: 1px solid #ddd;
+      }
+
+      .message {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        margin-right: 10px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .send {
+        background-color: #075e54;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.2s;
+      }
+
+      .send:hover {
+        background-color: #044a42;
+      }
+    </style>
   </head>
   <body>
     <h1>Chatting Application</h1>
-    <input
-      type="text"
-      class="message"
-      placeholder="Type your message here..."
-    />
-    <button class="send">Send</button>
-
-    <div class="messages"></div>
+    <div class="chat-container">
+      <div class="messages"></div>
+      <div class="message-input-container">
+        <input
+          type="text"
+          class="message"
+          placeholder="Type your message here..."
+        />
+        <button class="send">Send</button>
+      </div>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -26,6 +124,10 @@
       socket.on("chat message", (message) => {
         const p = document.createElement("p");
         p.innerText = message;
+        const statusIcon = document.createElement("span");
+        statusIcon.classList.add("message-status");
+        statusIcon.innerText = "✓"; // Single checkmark
+        p.appendChild(statusIcon);
         allMessages.appendChild(p);
       });
 
